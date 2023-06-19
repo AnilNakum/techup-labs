@@ -1,0 +1,90 @@
+<div class="row clearfix justify-content-md-center form pin-form" style="display: none">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="header">
+        <h2>
+          <strong>Pin</strong>
+          Form
+        </h2>
+      </div>
+      <div class="body">
+        <form class="form" #pinForm="ngForm" (ngSubmit)="pinForm.form.valid && addUpdatePin()">
+          <input type="hidden" name="file" id="file" #file="ngModel" [(ngModel)]="pinData.file" />
+          <div class="row justify-content-md-center">
+
+            <div class="col-md-10">
+              <label for="title"><b> Title</b>&nbsp;<small class="required">*</small></label>
+              <div class="input-group input-lg">
+                <input type="text" class="form-control" placeholder=" Title" name="title" id="title" #title="ngModel"
+                  [(ngModel)]="pinData.title" required />
+                <span *ngIf="(pinForm.submitted && !title.valid) || title.touched " class="validation">
+                  <span *ngIf="title.errors">Please enter customer title</span>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <label for="customerEmail"><b>Drop Image</b>&nbsp;<small class="required">*</small></label>
+              <div class="input-group input-lg">
+                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                  [uploader]="uploader" class="well my-drop-zone" > 
+                  Drop Zone
+                  <span *ngFor="let item of uploader.queue">
+                    <strong>{{ item?.file?.name }}</strong>
+                  </span>
+                </div>
+                
+                <span *ngIf="pinForm.submitted" class="validation">
+                  <span *ngIf="this.uploader.queue.length <= 0">Please Drop Image here</span>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <label for="region"><b>Select Collaboratory</b>&nbsp;<small class="required">*</small></label>
+              <div class="input-select">
+                <ng-select name="region" id="region" #region="ngModel" [(ngModel)]="pinData.region" [searchable]="false"
+                  placeholder="Please Select"  [multiple]="true">
+                  <ng-option *ngFor="let c of Customers;let i =index" [value]="c.customerTitle">{{ c.customerTitle }}</ng-option>
+                </ng-select>
+                <span *ngIf="pinForm.submitted || region.touched" class="validation">
+                  <span *ngIf="
+                      pinData.region == null || pinData.region == 0
+                    ">Please select region</span>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-10 mt-2">
+              <label for="privacy"><b>Privacy</b>&nbsp;<small class="required">*</small></label>
+              <div class="radio">
+                <input type="radio" name="privacy" id="private" value="Private" [(ngModel)]="pinData.privacy"  required >
+                <label for="private">
+                  Private
+                </label>
+                <input type="radio" name="privacy" id="public" value="Public"  [(ngModel)]="pinData.privacy" required >
+                <label for="public">
+                    Public
+                </label>
+                </div>
+                <span *ngIf="pinForm.submitted " class="validation">
+                  <span *ngIf="
+                      pinData.privacy == null 
+                    ">Please select Privacy</span>
+                </span>
+            </div>
+
+            
+          </div>
+          <div class="row justify-content-md-center mt-5">
+            <div class="col-md-10 form-action">
+              <button type="submit" class="btn l-cyan ">
+                Submit
+              </button>
+              <button type="reset" (click)="this.commonService.closeForm('pin');this.uploader.clearQueue();" class="btn btn-secondary reset_form">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

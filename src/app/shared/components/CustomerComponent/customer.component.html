@@ -1,0 +1,82 @@
+<div class="row clearfix justify-content-md-center form customer-form" style="display: none">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="header">
+          <h2>
+            <strong>Customer</strong>
+            Form 
+          </h2>
+        </div>
+        <div class="body">
+          <form class="form" #customerForm="ngForm" (ngSubmit)="customerForm.form.valid && addUpdateCustomer()">
+            <div class="row justify-content-md-center">
+
+              <div class="col-md-10">
+                <label for="customerTitle"><b>Customer Title</b>&nbsp;<small class="required">*</small></label>
+                <div class="input-group input-lg">
+                  <input type="text" class="form-control" placeholder="Customer Title" name="customerTitle"
+                    id="customerTitle" #customerTitle="ngModel" [(ngModel)]="customerData.customerTitle"
+                    required />
+                  <span *ngIf="(customerForm.submitted && !customerTitle.valid) || customerTitle.touched "
+                    class="validation">
+                    <span *ngIf="customerTitle.errors">Please enter customer title</span>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <label for="customerEmail"><b>Customer Email</b>&nbsp;<small class="required">*</small></label>
+                <div class="input-group input-lg">
+                  <input type="text" class="form-control" placeholder="Customer Title" name="customerEmail"
+                    id="customerEmail" #customerEmail="ngModel" [(ngModel)]="customerData.customerEmail"
+                    required />
+                  <span *ngIf="(customerForm.submitted && !customerEmail.valid) || customerEmail.touched "
+                    class="validation">
+                    <span *ngIf="customerEmail.errors">Please enter customer email</span>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-10">
+                <label for="region"><b>Select Region</b>&nbsp;<small class="required">*</small></label>
+                <div class="input-select">
+                  <ng-select name="region" id="region" #region="ngModel" [(ngModel)]="customerData.region"
+                    [searchable]="false" placeholder="Please Select" (change)="changeRegions($event)">
+                    <ng-option *ngFor="let r of regions;let i =index" [value]="r">{{ r }}</ng-option>
+                  </ng-select>
+                  <span *ngIf="customerForm.submitted || region.touched" class="validation">
+                    <span *ngIf="
+                        customerData.region == null || customerData.region == 0
+                      ">Please select region</span>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-10 mt-2">
+                <label for="country"><b>Select Country</b>&nbsp;<small class="required">*</small></label>
+                <div class="input-select">
+                  <ng-select name="country" id="country" #country="ngModel" [(ngModel)]="customerData.country"
+                    [searchable]="false" placeholder="Please Select">
+                    <ng-option *ngFor="let c of countries;let i =index" [value]="c">{{ c }}</ng-option>
+                  </ng-select>
+                  <span *ngIf="customerForm.submitted || country.touched" class="validation">
+                    <span *ngIf="
+                        customerData.country == null || customerData.country == 0
+                      ">Please select country</span>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+            <div class="row justify-content-md-center mt-5">
+              <div class="col-md-10 form-action">
+                <button type="submit" class="btn l-cyan ">
+                  Submit
+                </button>
+                <button type="reset" (click)="this.commonService.closeForm('customer')" class="btn btn-secondary reset_form">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

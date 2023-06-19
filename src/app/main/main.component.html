@@ -1,0 +1,64 @@
+<section class="">
+  <div class="block-header">
+    <div class="row">
+      <div class="col-lg-7 col-md-6 col-sm-12">
+        <h2>Techup Labs</h2>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-12">
+        <button class="btn l-cyan  btn-md float-right m-l-10" type="button"
+          (click)="this.commonService.viewForm('customer')">
+          <i class="zmdi zmdi-plus"></i>&nbsp; Add
+          New Customer
+        </button>
+        <button class="btn l-cyan  btn-md float-right m-l-10" type="button"
+          (click)="this.commonService.viewForm('pin')">
+          <i class="zmdi zmdi-plus"></i>&nbsp; Add
+          New Pin
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <app-customer></app-customer>
+    <app-pin></app-pin>
+
+    <div class="row clearfix data-list" *ngIf="Pins?.length == null || Pins?.length == 0">
+      <div class="col-md-12">
+        <div class="card card-head text-center">
+          <div class="card-body mt-5">
+            <h6>No Data Found</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix" *ngIf="Pins?.length != 0">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong>Pin</strong> Details </h2>
+          </div>
+          <div class="body table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Image</th>
+                  <th>Collaboratory</th>
+                  <th>Privacy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of Pins; let i = index">
+                  <td>{{p.title}}</td>
+                  <td><img [src]="p.file" alt="Image" width="100px" height="100px"></td>
+                  <td>{{p.region}}</td>
+                  <td>{{p.privacy}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
